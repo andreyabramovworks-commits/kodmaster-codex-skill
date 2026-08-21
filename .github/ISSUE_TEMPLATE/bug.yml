@@ -1,0 +1,22 @@
+name: Bug report
+description: Report a reproducible KodMaster problem
+title: "[Bug]: "
+labels: [bug]
+body:
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior and reproduction
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: KodMaster version
+      placeholder: 4.0.0

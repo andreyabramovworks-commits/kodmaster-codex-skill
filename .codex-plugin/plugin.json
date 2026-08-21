@@ -1,0 +1,39 @@
+{
+  "name": "kodmaster",
+  "version": "4.0.0",
+  "description": "Autonomous application audit, bug-fixing, planning and UI/UX skill for Codex and ChatGPT.",
+  "author": {
+    "name": "andreyabramovworks-commits",
+    "url": "https://github.com/andreyabramovworks-commits"
+  },
+  "homepage": "https://github.com/andreyabramovworks-commits/Kodmaster---skill-for-codex",
+  "repository": "https://github.com/andreyabramovworks-commits/Kodmaster---skill-for-codex",
+  "license": "MIT",
+  "keywords": [
+    "codex",
+    "agent-skill",
+    "code-audit",
+    "bug-fixing",
+    "security-audit",
+    "ui-ux",
+    "accessibility",
+    "react",
+    "postgresql"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "KodMaster",
+    "shortDescription": "Plan, audit, fix and verify complete applications",
+    "longDescription": "A self-contained, risk-driven engineering skill with technical and UI audits, root-cause debugging, tests, security, database, React and writing workflows.",
+    "developerName": "andreyabramovworks-commits",
+    "category": "Developer Tools",
+    "capabilities": ["Read", "Write", "Interactive"],
+    "websiteURL": "https://github.com/andreyabramovworks-commits/Kodmaster---skill-for-codex",
+    "defaultPrompt": [
+      "Audit my entire application and find real bugs.",
+      "Find the root cause, fix it, and add a test.",
+      "Audit this UI for UX and accessibility issues."
+    ],
+    "brandColor": "#2563EB"
+  }
+}

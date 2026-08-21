@@ -1,0 +1,7 @@
+interface:
+  display_name: "KodMaster v4"
+  short_description: "Умный план, технический/UI-аудит, исправление и проверка"
+  default_prompt: "Используй $kodmaster. Пойми намерение по обычному тексту, выбери Fast, Adaptive или Deep и загрузи только нужные внутренние профили. Для общего аудита и приёмки используй /kodaudit, для UI/UX/a11y — /uiaudit. Сначала доказательства и первопричина, затем исправление и регрессионная проверка."
+
+policy:
+  allow_implicit_invocation: true

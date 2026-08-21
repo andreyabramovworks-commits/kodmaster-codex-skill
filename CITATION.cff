@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use KodMaster, please cite this repository."
+title: "KodMaster: Autonomous Audit and Development Skill for Codex"
+type: software
+version: 4.0.0
+date-released: 2026-08-21
+authors:
+  - name: andreyabramovworks-commits
+repository-code: "https://github.com/andreyabramovworks-commits/Kodmaster---skill-for-codex"
+license: MIT

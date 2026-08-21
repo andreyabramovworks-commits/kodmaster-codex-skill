@@ -1,0 +1,12 @@
+# KodMaster
+
+> Autonomous Agent Skill for OpenAI Codex and ChatGPT: planning, full application audit, bug root-cause analysis and fixes, code review, UI/UX/accessibility audit, PostgreSQL/Supabase, React/Next.js, security, dependencies, performance, tests, CI/CD, translation and writing.
+
+Canonical repository: https://github.com/andreyabramovworks-commits/Kodmaster---skill-for-codex
+Skill entrypoint: ./skills/kodmaster/SKILL.md
+User guide: ./skills/kodmaster/docs/USER_GUIDE.md
+Technical documentation: ./skills/kodmaster/docs/DOCUMENTATION.md
+Install guide: ./INSTALL.md
+License: MIT
+
+Natural-language triggers include: audit the whole application, find bugs, broken scenarios, review code, fix a bug, audit UI, accessibility audit, plan implementation, проверить приложение, найти баги, аудит кода, аудит интерфейса, исправить ошибку.
