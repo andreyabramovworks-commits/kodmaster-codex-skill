@@ -5,7 +5,7 @@ license: MIT
 metadata:
   author: andreyabramovworks-commits
   version: 4.0.0
-  repository: https://github.com/andreyabramovworks-commits/Kodmaster---skill-for-codex
+  repository: https://github.com/andreyabramovworks-commits/kodmaster-codex-skill
 ---
 
 # KodMaster v4

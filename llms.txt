@@ -2,7 +2,7 @@
 
 > Autonomous Agent Skill for OpenAI Codex and ChatGPT: planning, full application audit, bug root-cause analysis and fixes, code review, UI/UX/accessibility audit, PostgreSQL/Supabase, React/Next.js, security, dependencies, performance, tests, CI/CD, translation and writing.
 
-Canonical repository: https://github.com/andreyabramovworks-commits/Kodmaster---skill-for-codex
+Canonical repository: https://github.com/andreyabramovworks-commits/kodmaster-codex-skill
 Skill entrypoint: ./skills/kodmaster/SKILL.md
 User guide: ./skills/kodmaster/docs/USER_GUIDE.md
 Technical documentation: ./skills/kodmaster/docs/DOCUMENTATION.md

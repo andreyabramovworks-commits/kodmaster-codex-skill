@@ -6,8 +6,8 @@
     "name": "andreyabramovworks-commits",
     "url": "https://github.com/andreyabramovworks-commits"
   },
-  "homepage": "https://github.com/andreyabramovworks-commits/Kodmaster---skill-for-codex",
-  "repository": "https://github.com/andreyabramovworks-commits/Kodmaster---skill-for-codex",
+  "homepage": "https://github.com/andreyabramovworks-commits/kodmaster-codex-skill",
+  "repository": "https://github.com/andreyabramovworks-commits/kodmaster-codex-skill",
   "license": "MIT",
   "keywords": [
     "codex",
@@ -28,9 +28,9 @@
     "developerName": "andreyabramovworks-commits",
     "category": "Developer Tools",
     "capabilities": ["Read", "Write", "Interactive"],
-    "websiteURL": "https://github.com/andreyabramovworks-commits/Kodmaster---skill-for-codex",
-    "privacyPolicyURL": "https://github.com/andreyabramovworks-commits/Kodmaster---skill-for-codex/blob/main/PRIVACY.md",
-    "termsOfServiceURL": "https://github.com/andreyabramovworks-commits/Kodmaster---skill-for-codex/blob/main/TERMS.md",
+    "websiteURL": "https://github.com/andreyabramovworks-commits/kodmaster-codex-skill",
+    "privacyPolicyURL": "https://github.com/andreyabramovworks-commits/kodmaster-codex-skill/blob/main/PRIVACY.md",
+    "termsOfServiceURL": "https://github.com/andreyabramovworks-commits/kodmaster-codex-skill/blob/main/TERMS.md",
     "defaultPrompt": [
       "Audit my entire application and find real bugs.",
       "Find the root cause, fix it, and add a test.",
