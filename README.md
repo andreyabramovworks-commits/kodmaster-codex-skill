@@ -2,7 +2,7 @@
 
 [Русская версия](README.ru.md) · [Installation](INSTALL.md) · [Changelog](CHANGELOG.md) · [License](LICENSE)
 
-![KodMaster logo](assets/logo.png)
+<img src="assets/logo.png" alt="KodMaster logo" width="180">
 
 KodMaster is a self-contained Agent Skill for OpenAI Codex and ChatGPT. It understands natural-language intent, plans work, audits complete applications, finds root causes, fixes bugs, verifies diffs, and audits UI/UX/accessibility without requiring the source skills it learned from.
 
