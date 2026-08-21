@@ -38,6 +38,7 @@ try {
     New-Item -ItemType Directory -Path (Join-Path $pluginStage 'skills') -Force | Out-Null
     Copy-Item -LiteralPath $skillSource -Destination (Join-Path $pluginStage 'skills\kodmaster') -Recurse
     Copy-Item -LiteralPath (Join-Path $repo '.codex-plugin') -Destination (Join-Path $pluginStage '.codex-plugin') -Recurse
+    Copy-Item -LiteralPath (Join-Path $repo 'assets') -Destination (Join-Path $pluginStage 'assets') -Recurse
     foreach ($file in @('README.md','README.ru.md','INSTALL.md','LICENSE','THIRD_PARTY_NOTICES.md')) {
         Copy-Item -LiteralPath (Join-Path $repo $file) -Destination $pluginStage
     }

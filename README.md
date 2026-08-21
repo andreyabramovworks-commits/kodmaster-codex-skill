@@ -2,6 +2,8 @@
 
 [Русская версия](README.ru.md) · [Installation](INSTALL.md) · [Changelog](CHANGELOG.md) · [License](LICENSE)
 
+![KodMaster logo](assets/logo.png)
+
 KodMaster is a self-contained Agent Skill for OpenAI Codex and ChatGPT. It understands natural-language intent, plans work, audits complete applications, finds root causes, fixes bugs, verifies diffs, and audits UI/UX/accessibility without requiring the source skills it learned from.
 
 ## What it checks
@@ -79,6 +81,8 @@ KodMaster includes adapted, self-contained methods informed by [Khasky Awesome A
 ## Contributing and repository safety
 
 Anyone may download, use, fork and modify their own copy under MIT. Only the repository owner and explicitly authorized collaborators can write to this repository. Contributions arrive as reviewed pull requests; `CODEOWNERS` marks the owner for review.
+
+Privacy, support and terms: [Privacy](PRIVACY.md) · [Support](SUPPORT.md) · [Terms](TERMS.md)
 
 ## License
 

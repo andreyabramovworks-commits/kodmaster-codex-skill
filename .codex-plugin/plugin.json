@@ -29,11 +29,15 @@
     "category": "Developer Tools",
     "capabilities": ["Read", "Write", "Interactive"],
     "websiteURL": "https://github.com/andreyabramovworks-commits/Kodmaster---skill-for-codex",
+    "privacyPolicyURL": "https://github.com/andreyabramovworks-commits/Kodmaster---skill-for-codex/blob/main/PRIVACY.md",
+    "termsOfServiceURL": "https://github.com/andreyabramovworks-commits/Kodmaster---skill-for-codex/blob/main/TERMS.md",
     "defaultPrompt": [
       "Audit my entire application and find real bugs.",
       "Find the root cause, fix it, and add a test.",
       "Audit this UI for UX and accessibility issues."
     ],
-    "brandColor": "#2563EB"
+    "brandColor": "#2563EB",
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png"
   }
 }
