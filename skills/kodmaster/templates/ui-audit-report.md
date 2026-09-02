@@ -1,40 +1,29 @@
-# UI audit
+# UI AUDIT
 
-**Mode/scope:** {{mode_scope}}  
-**Verdict:** {{verdict}}
+Область проверки: {{scope}}
+Уровень общего риска: {{risk}}
 
-## Highest-impact changes
+## Критично
+{{critical}}
 
-{{top_changes}}
+## Важно
+{{important}}
 
-## Flow evidence
+## Улучшения
+{{improvements}}
 
-| Step | State and evidence | Health |
-| --- | --- | --- |
-| 1 | {{step_and_screenshot}} | {{health}} |
+## Что уже хорошо и не требует изменения
+{{good}}
 
-## Findings
+## Рекомендуемый порядок исправлений
+{{order}}
 
-### [P2] {{title}}
+Код не изменен.
 
-- Evidence: {{screenshot_dom_or_file_line}}
-- User impact: {{impact}}
-- Root cause/owner: {{root_cause}}
-- Fix and verification: {{fix_and_check}}
-- Confidence: {{0_to_10}}
 
-## Before / after
+## Legacy architecture
 
-| Before | After | Why |
-| --- | --- | --- |
-| {{before}} | {{after}} | {{why}} |
-
-## Accessibility and text
-
-{{a11y_and_copy}}
-
-## Not assessed
-
-{{limits}}
-
-No files were changed. <!-- remove this line for an implementation task -->
+- CSS override graph: ...
+- Render/load/bind ownership: ...
+- Modal/overlay viewport contract: ...
+- Visual preservation risk: ...

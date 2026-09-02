@@ -1,40 +1,25 @@
-# Technical audit
+# Audit Report
 
-**Mode:** {{fast_adaptive_deep}}  
-**Commit/scope:** {{scope}}  
-**Verdict:** {{ship_fix_block_or_acceptance}}
+## Scope
 
-## Outcome
+-
 
-{{short_outcome}}
+## Critical
 
-## Coverage
+### A-001: <title>
+- Observation:
+- Location:
+- Risk:
+- Recommendation:
 
-| Track | Status | Evidence |
-| --- | --- | --- |
-| Architecture/correctness | {{status}} | {{evidence}} |
-| Security/dependencies | {{status}} | {{evidence}} |
-| Data/API | {{status}} | {{evidence}} |
-| Performance/reliability | {{status}} | {{evidence}} |
-| Tests/CI/deploy | {{status}} | {{evidence}} |
+## Medium
 
-## Findings
+## Low
 
-### [P1] {{title}}
+## Recommended execution
 
-- Evidence: `{{file}}:{{line}}`, {{reproduction}}
-- Impact: {{impact}}
-- Root cause: {{root_cause}}
-- Fix: {{fix}}
-- Regression check: {{check}}
-- Confidence: {{0_to_10}}
+- Mode:
+- Recommended model:
+- Minimum acceptable:
 
-## Fix order
-
-{{ordered_plan}}
-
-## Not assessed
-
-{{limits}}
-
-No files were changed. <!-- remove this line for an implementation task -->
+No files were changed.

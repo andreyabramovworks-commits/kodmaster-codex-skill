@@ -1,31 +1,26 @@
 # `/kodaudit` — единый технический аудит
 
-Команда выбирает внутренний режим автоматически.
+Команда автоматически выбирает Discovery или Acceptance.
 
-## Discovery: найти проблемы
+Перед аудитом: выбрать Fast/Adaptive/Deep, выполнить Rule Router и загрузить обязательные rule packs.
 
-Признаки: пользователь просит проверить приложение/код/архитектуру, найти баги, нерабочие сценарии, ошибки или риски; проверяемого diff согласованной задачи нет.
+## Discovery
 
-1. Определить Fast/Deep/Adaptive по `references/routing-and-depth.md`.
-2. Выполнить read-only карту scope и применимых треков.
-3. Читать `references/audit-engine.md`, `technical-audit.md` и условные профили стека.
-4. Проверить runtime/tests/build только безопасными read/execute действиями.
-5. Подтвердить кандидатов, сгруппировать по первопричине.
-6. Вернуть `SHIP | FIX | BLOCK`, findings P0–P3, план исправлений и `NOT_ASSESSED`.
+1. Read-only карта scope и применимых tracks.
+2. `audit-engine.md`, `technical-audit.md` и условные profiles стека.
+3. Runtime/tests/build только безопасными действиями.
+4. Подтвердить candidates, сгруппировать по root cause.
+5. Вернуть `SHIP | FIX | BLOCK`, P0–P3 и `NOT_ASSESSED`.
 
-Не исправлять код, если пользователь просил только аудит. Если запрос «найди и исправь», после отчёта Discovery перейти к `/apply`, начиная с P0/P1.
+Не исправлять код при запросе только аудита. При «найди и исправь» после Discovery перейти к `/apply`.
 
-## Acceptance: проверить результат
+## Acceptance
 
-Признаки: есть согласованная задача и фактический diff/ветка/результат Codex; вопрос — готово ли изменение.
+1. Base/head, dirty state и реальный diff.
+2. Все changed files или явный список пропущенных.
+3. Сопоставить diff с acceptance criteria/non-goals.
+4. Повторно выполнить Rule Router по фактически изменённым слоям.
+5. Проверить correctness/security/tests/migrations/API/UI/deploy по риску.
+6. Вернуть только `GO | REWORK | BLOCKED | EVIDENCE_REQUIRED` с доказательствами.
 
-1. Установить base/head, dirty state и полный diff.
-2. Прочитать все изменённые файлы или назвать пропущенные.
-3. Сопоставить diff с acceptance criteria и non-goals.
-4. Проверить correctness, security, tests, migrations/API/UI/deploy по затронутому риску.
-5. Выполнить достаточные проверки, не доверяя слову «готово».
-6. Вернуть один вердикт: `GO | REWORK | BLOCKED | EVIDENCE_REQUIRED`.
-
-Находки формулировать по `references/audit-engine.md`. При REWORK передавать только новый дефект и нужный контекст, затем повторять Acceptance.
-
-`GO` разрешает merge/deploy только если пользователь ранее явно авторизовал `/kodsend` lifecycle и production path подтверждён. Сам по себе `/kodaudit` ничего не публикует.
+Сам `/kodaudit` ничего не публикует.

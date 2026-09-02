@@ -1,61 +1,64 @@
-# KodMaster v4 — техническая документация
+# KodMaster v4.1 — архитектура
 
-## Назначение
+## Главная схема
 
-KodMaster — автономный skill-router для планирования, реализации и evidence-based аудита. Он включает адаптированные методики внутри пакета и не зависит от наличия Awesome Agent Skills, Vercel Agent Skills или Supabase Skills у пользователя.
+`User intent → command router → Rule Router → mandatory rule packs → reference profiles → work/audit → evidence → result`.
 
-## Архитектура
+Для Codex lifecycle:
 
-```text
-Natural-language intent / slash command
-  → route: plan | technical audit | UI audit | apply | Codex lifecycle | writing
-  → depth: Fast | Adaptive | Deep
-  → progressive reference selection
-  → evidence ledger and root-cause workflow
-  → report / implementation / acceptance verdict
-```
+`ChatGPT/KodMaster → /kodplan → /kodsend → task branch → Codex → Acceptance → REWORK/GO → main → production`.
 
-- `SKILL.md` — компактный router и инварианты.
-- `commands/` — публичные действия и legacy aliases.
-- `references/` — автономные conditional playbooks.
-- `rules/` — development/UI/Git orchestration contracts.
-- `templates/` — форматы планов и отчётов.
-- `scripts/` — локальная валидация и project-memory helper.
+## Почему появился Rule Router
 
-## Единый `/kodaudit`
+Раньше большие файлы правил существовали, но progressive disclosure гарантированно маршрутизировал в основном reference-профили. v4.1 отделяет два вопроса:
 
-Discovery выполняет read-only поиск дефектов и возвращает `SHIP | FIX | BLOCK`. Acceptance проверяет существующий diff и возвращает `GO | REWORK | BLOCKED | EVIDENCE_REQUIRED`. Router различает их по наличию согласованной задачи и проверяемого diff. `/audit` сохранён только как legacy alias Discovery.
+1. **Что делать?** — command/intent router.
+2. **Какие обязательные правила прочитать?** — Rule Router.
 
-## Technical tracks
+Rule Router повторяется при обнаружении нового слоя системы.
 
-Architecture/contracts, correctness, API/errors/logging, security/leak, dependencies/supply chain, performance/reliability, DB/PostgreSQL/Supabase, tests, CI/CD/deploy и условные React/Next.js проверки.
+## Канонические rule packs
 
-## UI tracks
+- `rules/core.md` — всегда;
+- `rules/clean-code.md` — ответственность модулей;
+- `rules/code-reuse.md` — переиспользование;
+- `rules/testing.md` — тесты и risk-based verification;
+- `rules/security.md` — единый security contract;
+- `rules/database.md` — единый DB/PostgreSQL/Supabase contract;
+- `rules/api-integrations.md` — API/webhooks/OAuth/external services;
+- `rules/performance.md` — performance;
+- `rules/css-architecture.md` — CSS и legacy normalization;
+- `rules/ui-design-system.md` — UI/UX/a11y;
+- `rules/development-rules.md` — shared workflow, delivery и legacy UI contracts;
+- `rules/development-workflow.md` — Git/main/production workflow;
+- `rules/codex-orchestration.md` — ChatGPT ↔ Codex orchestration.
 
-Реальные flows и screenshots, UX states, responsive/touch/keyboard, WCAG 2.1/2.2 risks, CSS/render ownership, visual system, motion/performance и UI copy/localization. Скриншотный аудит не выдаётся за полный screen-reader/WCAG аудит.
+Удалены дублирующие файлы `css-ui-architecture.md` и `database-and-integrations.md`. Clean Code и Code Reuse оставлены отдельными каноническими packs вместо повторения полного текста внутри development rules.
 
-## Writing tracks
+По решению владельца Modal Contract, Single UI Ownership и Visual Preservation остаются также в существующем UI/development контуре.
 
-Advisory grammar review, document editing, RU→EN translation, English humanization and reference-based style mimic. Structural markup, code, links, identifiers and facts must be preserved.
+## Context Loading Policy
 
-## Token model
+Экономия токенов вторична по отношению к полноте применимых правил. Жёсткого token cap нет.
 
-Fast загружает только route + обязательные профили. Adaptive начинает с дешёвой карты и расширяется при risk signals. Deep читает все применимые к найденному стеку профили и делает repository-wide coverage. Findings дедуплицируются по root cause; raw logs/source не дублируются.
+Fast/Adaptive/Deep управляют объёмом code/reference context, но не отменяют mandatory rules. При сомнении о rule pack, влияющем на correctness/security/data/deploy, pack читается.
 
-## Safety model
+## Audit Profiles
 
-Read-only diagnostics допустимы. Active pentest требует authorization/scope. Apply не включает commit/push/deploy. `/kodsend` разрешает Git/Codex/merge/deploy только в границах конкретной согласованной задачи и при подтверждённом production path.
+Базовые: audit engine, technical audit, debugging/tests, database, React, UI/a11y, writing/localization.
 
-## Проверка пакета
+Optional v4.1: background jobs/queues, caching, file uploads/storage, realtime, browser state/session.
 
-Из корня skill:
+## Automated skill checks
 
-```powershell
-python .\scripts\validate_skill.py
-```
+`tests/test_specs.py` проверяет:
 
-Validator проверяет обязательные файлы, metadata, ключевые возможности и внутренние ссылки.
+- наличие команд и natural-language equivalents в `/kodhelp`;
+- наличие обязательных rule packs в Rule Router;
+- наличие optional profiles;
+- safety-first Context Loading Policy;
+- отсутствие двух удалённых duplicate rule files.
 
-## Источники и лицензии
+`tests/routing_cases.json` и `tests/rule_router_cases.json` являются machine-readable forward-test наборами для маршрутизации.
 
-Сводка методик — `references/methodology-sources.md`; обязательные уведомления — `THIRD_PARTY_NOTICES.md` в репозитории дистрибутива.
+`scripts/validate_skill.py` проверяет структуру, ссылки и запускает spec tests.

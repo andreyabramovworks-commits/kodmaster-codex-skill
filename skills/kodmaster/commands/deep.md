@@ -1,3 +1,12 @@
-# `/deep` — полный модификатор
+# `/deep` — полный применимый проход
 
-Применить к текущему намерению. Для аудита обязательны: карта всего репозитория, все применимые треки, runtime/build/tests, критические пользовательские сценарии, variant sweep и `NOT_ASSESSED`. Deep не расширяет разрешения на active pentest, destructive actions или production writes.
+Deep означает полный анализ реально применимого стека, а не просто более долгое размышление.
+
+1. Построить repository/stack map.
+2. Выполнить Rule Router по найденным технологиям и потокам.
+3. Прочитать все применимые rule packs.
+4. Прочитать все применимые reference profiles.
+5. Проверить architecture/runtime/data/UI/tests/CI/deploy в пределах доступного evidence.
+6. Выполнить variant sweep и перечислить `NOT_ASSESSED`.
+
+Deep не требует читать profile отсутствующей технологии. Например, если Redis/WebSocket/Supabase в проекте нет, их profile не загружается только ради формальной полноты.

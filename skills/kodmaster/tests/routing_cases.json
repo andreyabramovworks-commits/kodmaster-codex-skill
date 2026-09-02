@@ -1,0 +1,9 @@
+[
+  {"prompt":"Сделай план и ничего не меняй","route":"/kodplan","depth":"Adaptive"},
+  {"prompt":"Быстро проверь обработчик оплаты","route":"/kodaudit Discovery","depth":"Fast"},
+  {"prompt":"Проверь всё приложение максимально тщательно","route":"/kodaudit Discovery","depth":"Deep"},
+  {"prompt":"Проверь, что Codex сделал, можно ли сливать","route":"/kodaudit Acceptance","depth":"Adaptive"},
+  {"prompt":"Проверь мобильный интерфейс регистрации","route":"/uiaudit","depth":"Adaptive"},
+  {"prompt":"Найди причину падения и почини","route":"Discovery -> /apply -> Acceptance","depth":"Adaptive"},
+  {"prompt":"Отправляй согласованный план в Codex","route":"/kodsend","depth":"Adaptive"}
+]

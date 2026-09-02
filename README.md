@@ -1,4 +1,4 @@
-# KodMaster v4 — autonomous audit and development skill for Codex
+# KodMaster v4.1 — autonomous audit and development skill for Codex
 
 [Русская версия](README.ru.md) · [Installation](INSTALL.md) · [Changelog](CHANGELOG.md) · [License](LICENSE)
 
@@ -56,7 +56,7 @@ Use KodMaster. Audit the entire application, find real bugs and broken scenarios
 
 ### Windows / Codex
 
-Download `kodmaster-v4-codex-windows.zip`, extract it, then double-click `install-kodmaster.cmd`. The installer validates the package and installs it to `%USERPROFILE%\.agents\skills\kodmaster`.
+Download `kodmaster-v4.1-codex-windows.zip`, extract it, then double-click `install-kodmaster.cmd`. The installer validates the package and installs it to `%USERPROFILE%\.agents\skills\kodmaster`.
 
 ### PowerShell
 
@@ -66,7 +66,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\install-kodmaster.ps1
 
 ### ChatGPT web
 
-Download the clean `kodmaster-v4-skill.zip`, then open **Plugins → Skills → Create → Upload from computer** and select the ZIP. Local Codex skills and web skills are separate installations.
+Download the clean `kodmaster-v4.1-skill.zip`, then open **Plugins → Skills → Create → Upload from computer** and select the ZIP. Local Codex skills and web skills are separate installations.
 
 See [INSTALL.md](INSTALL.md) for updates, uninstall and troubleshooting.
 

@@ -1,40 +1,13 @@
-# PostgreSQL и Supabase
+# PostgreSQL / Supabase Audit Profile
 
-Применять к PostgreSQL в любом окружении; Supabase-специфику включать только если она есть в проекте.
+Обязательные правила разработки: `rules/database.md`. Этот файл описывает, как их проверять.
 
-## Схема и целостность
+Проверить schema invariants, PK/FK/UNIQUE/NOT NULL/CHECK/defaults, tenant ownership, timezone/money types, cascades.
 
-- Точные типы, PK/FK, UNIQUE, NOT NULL, CHECK и defaults отражают бизнес-инварианты.
-- Не использовать EAV/generic key-value без доказанной необходимости.
-- Тenant key присутствует во всех нужных связях; каскады удаления осознанны.
-- Временные значения хранят timezone; деньги/точность не используют float.
+Для queries: N+1, SELECT *, unbounded scans, predicates, indexes под WHERE/JOIN/ORDER BY, pagination. EXPLAIN/ANALYZE только на безопасных данных.
 
-## Запросы и индексы
+Для concurrency: atomic multi-step writes, isolation/locks, stable lock order, short transactions, idempotency, connection pools.
 
-- Нет `SELECT *` в критических путях, N+1, unbounded scans и unindexable predicates.
-- Индексы следуют реальным WHERE/JOIN/ORDER BY и проверяются через EXPLAIN/ANALYZE на безопасных данных.
-- Учитывать composite order, partial indexes, write amplification и unused indexes.
-- Pagination предпочтительно cursor/keyset для больших/изменяемых наборов.
+Supabase: RLS, SELECT/INSERT/UPDATE/DELETE policies, service-role leakage, views/functions/security definer/search_path, Storage policies, Edge Functions.
 
-## Транзакции и concurrency
-
-- Критические multi-step writes атомарны; isolation и locks соответствуют гонке.
-- Lock order стабилен, транзакции короткие, external I/O не держит lock.
-- Повторяемые команды имеют idempotency/unique guard.
-- Connection pool имеет лимиты и не создаёт connection storm.
-
-## RLS и Supabase
-
-- RLS включён на публично доступных tenant/user tables.
-- Policy проверяет пользователя и tenant для SELECT/INSERT/UPDATE/DELETE; service-role key не попадает в client.
-- Проверить обход через views/functions, `security definer`, search_path, Storage policies и Edge Functions.
-- Публичный anon key не считать секретом; service role и private keys — секреты.
-
-## Миграции и эксплуатация
-
-- Expand → backfill → switch → contract для breaking schema changes.
-- Large backfill chunked/resumable; DDL lock и table rewrite оценены до production.
-- Есть downgrade/forward-fix стратегия, backups и проверенный restore.
-- Наблюдаемость: slow queries, locks, pool saturation, replication lag и storage growth.
-
-Не запускать destructive migration или EXPLAIN ANALYZE на production без явного разрешения.
+Migrations: expand → backfill → switch → contract для breaking changes; large backfill chunked/resumable; DDL lock/table rewrite оценить до production.

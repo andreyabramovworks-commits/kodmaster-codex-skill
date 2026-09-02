@@ -1,4 +1,4 @@
-# KodMaster v4 — автономный аудит и разработка для Codex
+# KodMaster v4.1 — автономный аудит и разработка для Codex
 
 KodMaster понимает обычный текст, сам выбирает нужную команду и глубину, проверяет всё приложение, находит первопричины, исправляет баги и отдельно аудирует интерфейс. Заимствованные методики полностью встроены: пользователю не нужны другие скиллы.
 
@@ -27,7 +27,7 @@ KodMaster понимает обычный текст, сам выбирает н
 
 ## Установка
 
-Для Codex скачайте `kodmaster-v4-codex-windows.zip`, распакуйте и дважды нажмите `install-kodmaster.cmd`. Для веб‑версии загрузите `kodmaster-v4-skill.zip` через **Plugins → Skills → Create → Upload from computer**.
+Для Codex скачайте `kodmaster-v4.1-codex-windows.zip`, распакуйте и дважды нажмите `install-kodmaster.cmd`. Для веб‑версии загрузите `kodmaster-v4.1-skill.zip` через **Plugins → Skills → Create → Upload from computer**.
 
 Полная инструкция для новичка: [INSTALL.md](INSTALL.md). Архитектура и методики: [skills/kodmaster/docs/DOCUMENTATION.md](skills/kodmaster/docs/DOCUMENTATION.md).
 

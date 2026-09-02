@@ -4,22 +4,28 @@ param(
     [switch]$Force
 )
 
-$ErrorActionPreference = 'Stop'
-$source = Join-Path $PSScriptRoot 'skills\kodmaster'
-$targetRoot = Join-Path ([Environment]::GetFolderPath('UserProfile')) '.agents\skills'
-$target = Join-Path $targetRoot 'kodmaster'
+$ErrorActionPreference = "Stop"
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 
-function Confirm-Action([string]$Prompt) {
-    if ($Force) { return $true }
-    return ((Read-Host "$Prompt [y/N]") -match '^(?i:y|yes|д|да)$')
+$scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
+$source = Join-Path $scriptDir "kodmaster"
+if (-not (Test-Path -LiteralPath (Join-Path $source 'SKILL.md'))) {
+    $source = Join-Path $scriptDir "skills\kodmaster"
 }
+$agentsRoot = Join-Path $HOME ".agents"
+$skillsRoot = Join-Path $agentsRoot "skills"
+$backupRoot = Join-Path $agentsRoot "skill-backups"
+$target = Join-Path $skillsRoot "kodmaster"
 
 if ($Uninstall) {
     if (-not (Test-Path -LiteralPath $target)) {
         Write-Host "KodMaster is not installed: $target"
         exit 0
     }
-    if (-not (Confirm-Action "Remove $target?")) { Write-Host 'Cancelled.'; exit 0 }
+    if (-not $Force -and ((Read-Host "Remove $target? [y/N]") -notmatch '^(?i:y|yes|д|да)$')) {
+        Write-Host 'Cancelled.'
+        exit 0
+    }
     if ($PSCmdlet.ShouldProcess($target, 'Uninstall KodMaster')) {
         Remove-Item -LiteralPath $target -Recurse -Force
     }
@@ -27,57 +33,72 @@ if ($Uninstall) {
     exit 0
 }
 
-if (-not (Test-Path -LiteralPath (Join-Path $source 'SKILL.md'))) {
-    throw "Package is incomplete: skills\kodmaster\SKILL.md was not found next to the installer."
+if (-not (Test-Path -LiteralPath (Join-Path $source 'SKILL.md'))) { throw "KodMaster source folder was not found next to installer." }
+
+New-Item -ItemType Directory -Force -Path $skillsRoot | Out-Null
+New-Item -ItemType Directory -Force -Path $backupRoot | Out-Null
+
+# Codex scans every folder inside active skills. Never keep backups there.
+Get-ChildItem -Path $skillsRoot -Directory -ErrorAction SilentlyContinue |
+    Where-Object { $_.Name -like "kodmaster.backup-*" -or $_.Name -like "kodmaster-old*" } |
+    ForEach-Object { Remove-Item $_.FullName -Recurse -Force }
+
+$legacyTargets = @(
+    (Join-Path $HOME ".codex\skills\kodmaster"),
+    (Join-Path $HOME ".codex\skills\kodmaster.backup"),
+    (Join-Path $HOME ".agents\skills\kodmaster-old")
+)
+foreach ($legacy in $legacyTargets) {
+    if ((Test-Path $legacy) -and ($legacy -ne $target)) { Remove-Item $legacy -Recurse -Force }
 }
 
-if ($WhatIfPreference) {
-    Write-Host "WHAT IF: validate $source and install KodMaster v4 to $target"
-    exit 0
+if (Test-Path $target) {
+    $backup = Join-Path $backupRoot ("kodmaster-" + (Get-Date -Format "yyyyMMdd-HHmmss"))
+    Move-Item $target $backup -Force
+    Write-Host "Previous version backed up to: $backup"
 }
 
-New-Item -ItemType Directory -Path $targetRoot -Force | Out-Null
-$stage = Join-Path $targetRoot ('.kodmaster-stage-' + [Guid]::NewGuid().ToString('N'))
-$old = Join-Path $targetRoot ('.kodmaster-old-' + [Guid]::NewGuid().ToString('N'))
+Copy-Item $source $target -Recurse -Force
 
-try {
-    Copy-Item -LiteralPath $source -Destination $stage -Recurse -Force
-    $validator = Join-Path $stage 'scripts\validate_skill.py'
-    $python = Get-Command python -ErrorAction SilentlyContinue
-    $pythonWorks = $false
-    if ($python -and $python.Source -notlike '*\WindowsApps\python.exe') {
-        try {
-            & $python.Source --version *> $null
-            $pythonWorks = ($LASTEXITCODE -eq 0)
-        } catch {
-            $pythonWorks = $false
-        }
-    }
-    if ($pythonWorks -and (Test-Path -LiteralPath $validator)) {
-        & $python.Source $validator
-        if ($LASTEXITCODE -ne 0) { throw 'Skill validation failed.' }
-    } else {
-        Write-Host 'Python is unavailable; structural validation only.'
-    }
+$skillFile = Join-Path $target "SKILL.md"
+if (-not (Test-Path $skillFile)) { throw "Installation failed: SKILL.md is missing." }
 
-    if ($PSCmdlet.ShouldProcess($target, 'Install KodMaster v4')) {
-        if (Test-Path -LiteralPath $target) { Move-Item -LiteralPath $target -Destination $old }
-        Move-Item -LiteralPath $stage -Destination $target
-        if (Test-Path -LiteralPath $old) { Remove-Item -LiteralPath $old -Recurse -Force }
-    } else {
-        Remove-Item -LiteralPath $stage -Recurse -Force
-    }
-} catch {
-    if (Test-Path -LiteralPath $stage) { Remove-Item -LiteralPath $stage -Recurse -Force }
-    if ((Test-Path -LiteralPath $old) -and -not (Test-Path -LiteralPath $target)) {
-        Move-Item -LiteralPath $old -Destination $target
-    }
-    throw
+$required = @(
+    "references\rule-router.md",
+    "rules\core.md",
+    "rules\database.md",
+    "rules\security.md",
+    "rules\css-architecture.md",
+    "rules\testing.md",
+    "references\background-jobs-and-queues.md",
+    "references\caching.md",
+    "references\file-uploads-and-storage.md",
+    "references\realtime.md",
+    "references\browser-state-and-session.md",
+    "tests\test_specs.py"
+)
+foreach ($relative in $required) {
+    if (-not (Test-Path (Join-Path $target $relative))) { throw "Installation validation failed: missing $relative" }
 }
 
-if (-not $WhatIfPreference) {
-    Write-Host ''
-    Write-Host 'INSTALLATION COMPLETE'
-    Write-Host "Installed to: $target"
-    Write-Host 'Start a new Codex task. If the skill is not visible, restart Codex once.'
+$obsoletePattern = '(?<![A-Za-z0-9_])/plan(?![A-Za-z0-9_-])'
+$obsolete = Get-ChildItem -Path $target -File -Recurse | Select-String -Pattern $obsoletePattern -ErrorAction SilentlyContinue
+if ($obsolete) {
+    $locations = ($obsolete | ForEach-Object { "$($_.Path):$($_.LineNumber)" }) -join ", "
+    throw "Installation validation failed: obsolete standalone /plan command found at: $locations"
 }
+
+$python = Get-Command python -ErrorAction SilentlyContinue
+if ($python) {
+    & python (Join-Path $target "scripts\validate_skill.py")
+    if ($LASTEXITCODE -ne 0) { throw "KodMaster validation failed." }
+} else {
+    Write-Host "Python not found: structural Python validation skipped."
+}
+
+Write-Host ""
+Write-Host "KodMaster v4.1 installed: $target" -ForegroundColor Green
+Write-Host "Rule Router: enabled"
+Write-Host "Context Loading Policy: safety-first"
+Write-Host "Restart Codex/ChatGPT Desktop completely and open a new session."
+Write-Host "Test: `$kodmaster /kodhelp"

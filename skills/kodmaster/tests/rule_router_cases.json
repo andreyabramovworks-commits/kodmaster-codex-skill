@@ -1,0 +1,10 @@
+[
+  {"case":"css_bug","must":["rules/core.md","rules/css-architecture.md","rules/ui-design-system.md"],"must_not":["rules/database.md"]},
+  {"case":"postgres_migration","must":["rules/core.md","rules/database.md","rules/testing.md"],"must_not":["rules/ui-design-system.md"]},
+  {"case":"external_api","must":["rules/core.md","rules/api-integrations.md","rules/security.md","rules/testing.md"]},
+  {"case":"upload","must":["rules/core.md","rules/security.md","rules/testing.md"],"profile":"references/file-uploads-and-storage.md"},
+  {"case":"queue","must":["rules/core.md","rules/testing.md"],"profile":"references/background-jobs-and-queues.md"},
+  {"case":"cache_tenant","must":["rules/core.md","rules/testing.md","rules/security.md"],"profile":"references/caching.md"},
+  {"case":"realtime_auth","must":["rules/core.md","rules/testing.md","rules/security.md"],"profile":"references/realtime.md"},
+  {"case":"browser_session","must":["rules/core.md","rules/testing.md","rules/security.md"],"profile":"references/browser-state-and-session.md"}
+]

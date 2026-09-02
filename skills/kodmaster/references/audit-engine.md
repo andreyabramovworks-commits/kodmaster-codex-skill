@@ -1,60 +1,41 @@
-# Доказательный audit engine
+# Доказательный Audit Engine
 
 ## Карта до находок
 
-Зафиксировать commit/branch, dirty state, stack, entrypoints, package managers, lockfiles, тестовые команды, CI и deploy config. Для Deep добавить диаграмму модулей, data flow и trust boundaries.
+Зафиксировать commit/branch, dirty state, stack, entrypoints, package managers, lockfiles, test commands, CI и deploy config. Для Deep добавить modules/data flow/trust boundaries.
 
 ## Реестр кандидатов
 
-Каждый кандидат проходит состояния:
-
 `CANDIDATE → CONFIRMED | SAFE | NEEDS_VERIFICATION`.
 
-Подтверждение требует минимум двух звеньев:
+Подтверждение требует нескольких связанных доказательств: конкретный pattern/guard/contract, достижимый path или failing scenario, неверный result/sink и при возможности test/trace/log/runtime fact. Проверять альтернативное объяснение. Нулевой grep не закрывает track.
 
-- конкретный pattern/guard/contract;
-- достижимый path с контролируемым входом или реальный failing scenario;
-- наблюдаемый sink/неверный результат;
-- тест, trace, log или воспроизводимый runtime-факт.
+## Приоритет
 
-Проверять альтернативное объяснение. Для security использовать source→transform→sink. Для review — contract→runtime→proof. Нулевой результат grep не закрывает трек.
+- P0 — потеря данных, полный outage, критический security bypass.
+- P1 — поломка ключевого flow, серьёзные права/утечка, высокая вероятность production incident.
+- P2 — существенный defect с workaround, reliability/performance/accessibility regression.
+- P3 — локальное качество, понятность или будущий риск.
 
-## Приоритет и уверенность
+Указывать confidence 0–10. Слабые находки не выдавать за подтверждённые.
 
-- **P0** — эксплуатация, потеря данных, полный outage или критический security bypass.
-- **P1** — поломка ключевого сценария, серьёзная утечка/неверные права, высокая вероятность production-инцидента.
-- **P2** — существенный дефект с обходным путём, reliability/performance/accessibility regression.
-- **P3** — локальная проблема качества, понятности или будущего риска.
+## Finding
 
-Указывать `confidence 0–10`. В финальные findings обычно включать confidence ≥7; более слабые — в `Needs verification`, не выдавая их за факт.
-
-## Структура находки
-
-1. Заголовок с P0–P3.
-2. Доказательство: `file:line`, команда/сценарий, observed vs expected.
-3. Влияние и затронутые пользователи/данные.
-4. Первопричина, а не только симптом.
-5. Минимальное исправление и нежелательные побочные изменения.
-6. Регрессионная проверка.
+1. P0–P3.
+2. Evidence: file:line, command/scenario, observed vs expected.
+3. Impact.
+4. Root cause.
+5. Minimal fix и что не надо менять.
+6. Regression check.
 7. Confidence.
 
-Объединять симптомы с общей первопричиной. Отмечать сильные существующие решения, если они влияют на итоговый вердикт.
+Объединять симптомы с общей первопричиной.
 
-## Discovery verdict
+## Verdicts
 
-- `SHIP` — нет блокирующих подтверждённых дефектов в проверенном scope.
-- `FIX` — есть подтверждённые исправимые дефекты.
-- `BLOCK` — безопасное продолжение невозможно: P0, неизвестный критический контур или недоступные обязательные доказательства.
+Discovery: `SHIP | FIX | BLOCK`.
+Acceptance: `GO | REWORK | BLOCKED | EVIDENCE_REQUIRED`.
 
-## Acceptance verdict
+Acceptance начинается с base/head и реального diff. Прочитать все changed files либо явно перечислить пропущенные. Проверить scope creep, secrets, generated files, migrations, API contracts, tests/build/CI и rollback по риску.
 
-- `GO` — diff соответствует задаче и прошёл достаточные проверки.
-- `REWORK` — найден конкретный исправимый дефект.
-- `BLOCKED` — нельзя безопасно продолжить.
-- `EVIDENCE_REQUIRED` — diff/тесты/окружение недостаточны для вывода.
-
-Acceptance начинается с base/head и реального diff. Прочитать все изменённые файлы либо явно перечислить пропущенные. Проверить scope creep, секреты, generated files, migrations, API contracts, tests/build/CI и rollback. Перед GO выполнить короткую самокритику: «какое предположение здесь самое слабое?»
-
-## Ограничения
-
-В конце перечислять `NOT_ASSESSED`: живой production, внешняя панель, мобильное устройство, screen reader, нагрузка, права аккаунта и т.п. Отсутствие доступа не превращать в положительный вывод.
+В конце перечислять `NOT_ASSESSED`.

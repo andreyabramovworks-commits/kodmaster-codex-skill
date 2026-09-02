@@ -2,7 +2,7 @@
 
 ## Codex on Windows — easiest way
 
-1. Download `kodmaster-v4-codex-windows.zip` from the latest GitHub Release.
+1. Download `kodmaster-v4.1-codex-windows.zip` from the latest GitHub Release.
 2. Right-click the ZIP → **Extract All**.
 3. Open the extracted folder.
 4. Double-click `install-kodmaster.cmd`.
@@ -31,7 +31,7 @@ Copy `skills/kodmaster` to `$HOME/.agents/skills/kodmaster`, then start a new ta
 
 ## ChatGPT web
 
-1. Download `kodmaster-v4-skill.zip`.
+1. Download `kodmaster-v4.1-skill.zip`.
 2. Open ChatGPT in the browser.
 3. Open **Plugins → Skills → Create → Upload from computer**.
 4. Select the ZIP and finish the upload.
@@ -47,7 +47,7 @@ Ask:
 Use KodMaster and show /kodhelp.
 ```
 
-You should see `KodMaster v4 active` and the `/kodaudit`/`/uiaudit` commands.
+You should see `KodMaster v4.1 active` and the `/kodaudit`/`/uiaudit` commands.
 
 ## Manual validation for developers
 

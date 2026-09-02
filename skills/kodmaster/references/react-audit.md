@@ -1,36 +1,15 @@
-# React и Next.js
+# React / Next.js Audit Profile
 
-## Data flow и bundles
+Проверять реальные conventions и версию проекта.
 
-- Убирать последовательные waterfalls: запускать независимые операции параллельно, await — как можно позже.
-- Не импортировать тяжёлые библиотеки через общий barrel, если это тянет лишний bundle.
-- Dynamic import применять к реально тяжёлым/редким веткам, не дробить всё автоматически.
-- Не передавать в Client Components данные и функции, которые там не нужны.
-
-## Render correctness
-
-- Derived state вычислять при render, а не синхронизировать лишним effect.
-- Не создавать component types внутри render.
-- Стабилизировать subscriptions/listeners и обязательно cleanup.
-- Проверить stale closures, dependency arrays, duplicate requests и hydration mismatch.
-- Большие списки: virtualization/content-visibility только при доказанной цене.
-
-## Composition
-
-- Boolean-prop explosion заменять явными variants или compound components.
-- State provider публикует минимальный interface; UI не знает способ хранения состояния.
-- Предпочитать composition/children и небольшие публичные seams; не добавлять абстракцию ради одного случая.
-- Существующие React/Next.js conventions и версия имеют приоритет над общим советом.
-
-## Interaction и motion
-
-- Анимация должна объяснять связь/состояние/feedback; частые keyboard actions не задерживать.
-- Для обычного UI предпочитать transform/opacity и interruptible transitions; избегать `transition: all`.
-- Popover возникает от trigger origin; modal остаётся центрированным.
-- Hover только для `(hover: hover) and (pointer: fine)`.
-- `prefers-reduced-motion` уменьшает движение, сохраняя полезный feedback.
-- View Transitions использовать только когда continuity между состояниями реально помогает; иметь fallback.
-
-## Проверка
-
-React DevTools/profile, bundle analyzer и Web Vitals использовать при доступности. Без measurement не выдавать micro-optimization за подтверждённую проблему.
+- устранять request waterfalls, параллелить независимое;
+- не тянуть тяжёлые bundles через ненужные barrel imports;
+- dynamic import только для реально тяжёлых/редких веток;
+- derived state вычислять при render, не синхронизировать лишним effect;
+- не создавать component types внутри render;
+- subscriptions/listeners должны иметь стабильный lifecycle и cleanup;
+- проверять stale closures, dependency arrays, duplicate requests, hydration mismatch;
+- избегать boolean-prop explosion, лишних abstractions и слишком широких provider interfaces;
+- animation должна объяснять state/feedback, учитывать reduced motion;
+- hover-only поведение не должно ломать touch;
+- bundle analyzer/Web Vitals/React profiler использовать при доступности; micro-optimization без measurement не считать подтверждённой проблемой.

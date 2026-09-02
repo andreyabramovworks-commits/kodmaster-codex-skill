@@ -4,7 +4,7 @@ param(
 )
 
 $ErrorActionPreference = 'Stop'
-$version = 'v4'
+$version = 'v4.1'
 $repo = $PSScriptRoot
 $skillSource = Join-Path $repo 'skills\kodmaster'
 if (-not (Test-Path -LiteralPath (Join-Path $skillSource 'SKILL.md'))) {
